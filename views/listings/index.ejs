@@ -1,0 +1,239 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+    #filters{
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+    }
+
+    .filter {
+        text-align: center;
+        margin-right: 2rem;
+        margin-top: 2rem;
+        opacity: 0.8;
+    }
+
+    .filter p{
+        font-size: 0.8rem;
+    }
+
+    .filter:hover {
+        opacity: 1;
+        cursor: pointer;
+    }
+
+    /* Theme toggle - ab filter jaisa hi styled, bas right side pe */
+    .theme-toggle {
+        margin-left: auto;
+        margin-top: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        opacity: 0.8;
+    }
+
+    .theme-toggle:hover {
+        opacity: 1;
+        cursor: pointer;
+    }
+
+    .theme-toggle i {
+        font-size: 14px;
+    }
+
+    .switch {
+        position: relative;
+        width: 45px;
+        height: 24px;
+    }
+
+    .switch input {
+        display: none;
+    }
+
+    .slider {
+        position: absolute;
+        inset: 0;
+        background: #222;
+        border-radius: 30px;
+        cursor: pointer;
+    }
+
+    .slider::before {
+        content: "";
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        left: 3px;
+        top: 3px;
+        background: white;
+        border-radius: 50%;
+        transition: 0.3s;
+    }
+
+    .switch input:checked + .slider::before {
+        transform: translateX(21px);
+    }
+
+    body {
+        background-color: #fff;
+        color: #222;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* DARK MODE */
+    body.dark-theme {
+        background-color: #121212 !important;
+        color: #fff !important;
+    }
+
+    body.dark-theme .filter {
+        color: #fff;
+    }
+
+    body.dark-theme .card {
+        background-color: #1e1e1e !important;
+        color: #fff !important;
+        border-color: #333;
+    }
+
+    body.dark-theme .card-text {
+        color: #fff !important;
+    }
+
+    body.dark-theme .listing-link {
+        color: #fff;
+    }
+
+    body.dark-theme .theme-toggle {
+        color: #fff;
+    }
+
+.theme-toggle {
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    padding: 4px 10px;
+    box-sizing: border-box;
+    background: #fff;
+}
+
+.slider {
+    /* border: 2px solid #ccc; */
+    box-sizing: border-box;
+}
+
+body.dark-theme .slider {
+    border: 2px solid #555;
+}
+
+.switch input:checked + .slider {
+    border-color: #4a90e2;
+}
+
+.slider::before {
+    background: #fe424d;
+}
+
+.switch input:checked + .slider::before {
+    background: #fe424d;
+}
+
+body.dark-theme .theme-toggle {
+    border-color: #555;
+    background: transparent;
+}
+
+</style>
+
+<div id="filters">
+    <div class="filter">
+        <div><i class="fa-solid fa-fire"></i></div>
+        <p>Trending</p>
+    </div>
+    <div class="filter">
+        <div><i class="fa-solid fa-bed"></i></div>
+        <p>Rooms</p>
+    </div>
+    <div class="filter">
+        <div><i class="fa-solid fa-mountain-city"></i></div>
+        <p>Iconic Cities</p>
+    </div>
+    <div class="filter">
+        <div><i class="fa-solid fa-mountain"></i></div>
+        <p>Mountains</p>
+    </div>
+    <div class="filter">
+        <div><i class="fa-brands fa-fort-awesome"></i></div>
+        <p>Castles</p>
+    </div>
+    <div class="filter">
+        <div><i class="fa-solid fa-person-swimming"></i></div>
+        <p>Amazing Pools</p>
+    </div>
+    <div class="filter">
+        <div><i class="fa-solid fa-campground"></i></div>
+        <p>Camping</p>
+    </div>
+    <div class="filter">
+        <div><i class="fa-solid fa-cow"></i></div>
+        <p>Farms</p>
+    </div>
+    <div class="filter">
+        <div><i class="fa-solid fa-igloo"></i></div>
+        <p>Arctic</p>
+    </div>
+
+    <!-- Theme Switch -->
+    <div class="theme-toggle">
+    <!-- <i class="fa-solid fa-sun"></i> -->
+
+    <label class="switch">
+        <input type="checkbox" id="themeSwitch">
+        <span class="slider"></span>
+    </label>
+
+    <i class="fa-solid fa-moon"></i>
+     </div>
+
+</div>
+
+        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
+
+            <% for(let listing of allListings) { %>
+            <a href="/listings/<%= listing._id %> " class="listing-link">
+                <div class="card listing-card" >
+                    <img 
+                        src="<%= listing.image.url %> "
+                        class="card-img-top" 
+                        alt="listing_image" 
+                        style="height: 20rem;"
+                    />
+                    <div class="card-img-overlay">abc</div>
+                    <div class="card-body">
+                        <p class="card-text">
+                           <b><%= listing.title %></b> 
+                            <br>
+                            &#8377; <%= listing.price.toLocaleString("en-In") %> /night
+                        </p>
+                    </div>
+                </div>
+            </a>
+
+            <% } %>
+
+        </div>
+
+ <script>
+    const themeSwitch = document.getElementById("themeSwitch");
+
+    themeSwitch.addEventListener("change", function () {
+        if (this.checked) {
+            document.body.classList.add("dark-theme");
+        } else {
+            document.body.classList.remove("dark-theme");
+        }
+    });
+</script>
+      
+
